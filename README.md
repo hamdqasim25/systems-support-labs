@@ -6,7 +6,7 @@ Hamdi’s hands-on portfolio of IT support and systems administration exercises.
 
 | Lab | Skills | Status | Evidence |
 | --- | --- | --- | --- |
-| [001 · Investigate a Windows DNS fault](labs/001-windows-dns/README.md) | Windows, PowerShell, DNS, ticket notes | Planned | Pending lab run |
+| [001 · Investigate a Windows DNS fault](labs/001-windows-dns/README.md) | Windows, PowerShell, DNS, ticket notes | Completed | [DNS fault and successful TCP check](labs/001-windows-dns/evidence/03-dns-fault.png) |
 
 ## Next exercises
 

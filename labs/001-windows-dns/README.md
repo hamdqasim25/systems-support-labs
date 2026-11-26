@@ -23,11 +23,13 @@ I used two checks throughout the exercise:
 - `Resolve-DnsName example.com -Type A -DnsOnly` asks DNS for the website’s IPv4 address.
 - `Test-NetConnection 1.1.1.1 -Port 443` tests a TCP connection to a numeric address, so this check can succeed even when name resolution fails.
 
+[View the original DNS settings, successful lookup and TCP baseline](evidence/00-baseline.png)
+
 ## Investigation
 
 | Step | What I checked | What I observed and why it mattered |
 |---|---|---|
-| 1. Change IPv4 DNS | I set the preferred IPv4 DNS server to `127.0.0.1`, cleared the DNS cache and repeated both checks. | `example.com` still resolved and TCP port 443 was reachable. The intended fault had not yet been reproduced, so I checked which other DNS servers were configured. |
+| 1. Change IPv4 DNS | I set the preferred IPv4 DNS server to `127.0.0.1`, cleared the DNS cache and repeated both checks. | `example.com` still resolved and TCP port 443 was reachable. The intended fault had not yet been reproduced, so I checked which other DNS servers were configured. [View the lookup after changing IPv4 DNS](evidence/01-ipv4-change-lookup.png) |
 | 2. Inspect the adapter | I ran `Get-DnsClientServerAddress -InterfaceAlias "Ethernet"` and queried `127.0.0.1` directly with `nslookup`. | Ethernet listed both an IPv4 and an IPv6 DNS server. The direct IPv4 query returned “No response from server.” [View IPv4 evidence](evidence/01-ipv4-loopback.png) |
 | 3. Test the IPv6 resolver | I sent the same A-record query directly to `fd17:625c:f037:2::3`. | It returned `172.66.147.243` and `104.20.23.154`. This confirmed the VM still had a resolver capable of answering the query. [View IPv6 evidence](evidence/02-ipv6-resolver.png) |
 | 4. Reproduce the full fault | I also set the preferred IPv6 DNS server to `::1`, cleared the cache and repeated the lookup and TCP test. | The DNS lookup failed with error `10054`. The TCP connection to `1.1.1.1:443` still succeeded. This narrowed the fault to name resolution. |
