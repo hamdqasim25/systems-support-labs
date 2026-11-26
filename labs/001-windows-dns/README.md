@@ -2,7 +2,11 @@
 
 **Status:** Planned  
 **Environment:** Windows test VM with PowerShell and internet access  
-**Scenario:** A user reports that a website will not load. A colleague suspects the network connection has dropped.
+**Skills Demonstrated:** 
+
+## Ticket
+
+A user reports that a website will not load. A colleague suspects the network connection has dropped.
 
 ## Exercise
 
